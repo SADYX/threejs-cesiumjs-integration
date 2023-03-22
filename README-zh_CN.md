@@ -1,5 +1,9 @@
 [English](./README.md) | 简体中文
 
+
+---
+[在线示例](https://sadyx.github.io/threejs-cesiumjs-integration/)
+
 # threejs-cesiumjs-integration
 一个集成了Threejs和Ceium的示例，包括了基本的点击事件和坐标转换方法
 
