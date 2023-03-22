@@ -1,0 +1,29 @@
+{
+  "name": "threejs-cesiumjs-integration",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "18.15.5",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "cesium": "^1.103.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sass": "^1.59.3",
+    "three": "^0.150.1",
+    "typescript": "5.0.2"
+  },
+  "devDependencies": {
+    "@types/three": "^0.149.0"
+  }
+}
