@@ -11,6 +11,9 @@ type Twins = {
 	cesium: CesiumParams;
 }
 
+console.log(process.env.SECRET);
+
+
 const Home = () => {
 	const cesiumRef = useRef<HTMLDivElement>(null);
 	const threeRef = useRef<HTMLDivElement>(null);
@@ -88,7 +91,6 @@ const Home = () => {
 			const intersects = raycaster.intersectObjects(threeScene.children, true);
 			const found = intersects
 				.find(({ object }) => object.type === 'Mesh')?.object as THREE.Mesh | undefined;
-			console.log(intersects);
 
 			if (found) {
 				if (found.uuid !== lastSelectedMesh.current?.uuid) {
@@ -115,6 +117,7 @@ const Home = () => {
 		return () => {
 			window.removeEventListener('resize', resize);
 			cesiumDom.removeEventListener('mousemove', onMouseMove);
+			cancelAnimationFrame(idAnimateFrame);
 		}
 	}, []);
 

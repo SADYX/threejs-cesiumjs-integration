@@ -21,6 +21,4 @@
  *
  * Portions licensed separately.
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
- */
-
-module.exports={type:"commonjs"};
+ */module.exports={type:"commonjs"};

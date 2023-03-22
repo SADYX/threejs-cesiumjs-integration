@@ -24,6 +24,7 @@
     "typescript": "5.0.2"
   },
   "devDependencies": {
-    "@types/three": "^0.149.0"
+    "@types/three": "^0.149.0",
+    "cross-env": "^7.0.3"
   }
 }
