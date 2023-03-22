@@ -1,10 +1,10 @@
 [English](./README.md) | 简体中文
 
 # threejs-cesiumjs-integration
-The example of integrating Threejs and Ceium includes basic click events and coordinate conversion methods.
+一个集成了Threejs和Ceium的示例，包括了基本的点击事件和坐标转换方法
 
-# quick start
-Clone then
+# 快速启动
+Clone 后
 <code>npm run dev</code>
 
 # 参考资料
