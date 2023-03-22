@@ -11,9 +11,6 @@ type Twins = {
 	cesium: CesiumParams;
 }
 
-console.log(process.env.SECRET);
-
-
 const Home = () => {
 	const cesiumRef = useRef<HTMLDivElement>(null);
 	const threeRef = useRef<HTMLDivElement>(null);

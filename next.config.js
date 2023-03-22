@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { default: getConfig } = require('next/config')
 const path = require('path')
 
 const nextConfig = {
   reactStrictMode: false,
+  publicRuntimeConfig: {
+    SECRET: process.env.SECRET
+  },
   webpack: (config, { webpack, isServer }) => {
     if (!isServer) {
       config.plugins.push(
@@ -43,7 +47,7 @@ const nextConfig = {
     }
     config.plugins.push(
       new webpack.DefinePlugin({
-        CESIUM_BASE_URL: JSON.stringify('/Cesium'),
+        CESIUM_BASE_URL: process.env.SECRET ? JSON.stringify(`/threejs-cesiumjs-integration/Cesium`) : JSON.stringify('/Cesium'),
       })
     )
     config.resolve.exportsFields = []
