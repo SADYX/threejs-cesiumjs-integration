@@ -1,12 +1,15 @@
 /** @type {import('next').NextConfig} */
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const { default: getConfig } = require('next/config')
 const path = require('path')
 
 const nextConfig = {
   reactStrictMode: false,
   publicRuntimeConfig: {
     SECRET: process.env.SECRET
+  },
+  sassOptions: {
+    fiber: false,
+    includePaths: [path.join(__dirname, 'styles')],
   },
   webpack: (config, { webpack, isServer }) => {
     if (!isServer) {

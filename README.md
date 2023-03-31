@@ -1,16 +1,33 @@
-English | [简体中文](./README-zh_CN.md)
-
+[English](./README.md) | 简体中文
 
 ---
-[live demo here](https://sadyx.github.io/threejs-cesiumjs-integration/)
 
+[在线示例](https://sadyx.github.io/threejs-cesiumjs-integration/)
 
 # threejs-cesiumjs-integration
-A example of integrating Threejs and Ceium includes basic click events and coordinate conversion methods.
 
-# quick start
-Clone then
-<code>npm run dev</code>
+一个集成了Threejs和Ceium的示例，包括了
 
-# useful links
+- 射线检测
+
+- 飞行至模型
+
+- 贴地坐标转化
+
+# 快速启动
+
+```bash
+git clone
+```
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+# 参考资料
+
 [Integrating Cesium with Three.js](https://cesium.com/blog/2017/10/23/integrating-cesium-with-threejs/)

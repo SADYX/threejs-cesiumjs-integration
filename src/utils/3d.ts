@@ -49,8 +49,26 @@ const getThreeModelQuaternion = (
     return [_q3.x, _q3.y, _q3.z, _q3.w] as [number, number, number, number];
 }
 
+// look the target object
+const flyMeToTheMoon = (viewer: Cesium.Viewer, obj: THREE.Object3D) => {
+    const v = new THREE.Vector3();
+    obj.getWorldPosition(v);
+    const sphere = new THREE.Box3().expandByObject(obj).getBoundingSphere(new THREE.Sphere());
+    viewer.camera.flyToBoundingSphere(
+        new Cesium.BoundingSphere(new Cesium.Cartesian3(v.x, v.y, v.z), sphere.radius),
+        {
+            offset: new Cesium.HeadingPitchRange(
+                Cesium.Math.toRadians(60),
+                Cesium.Math.toRadians(-60),
+                0
+            )
+        }
+    );
+}
+
 export {
     deg2rad,
     rad2deg,
     getThreeModelQuaternion,
+    flyMeToTheMoon,
 }

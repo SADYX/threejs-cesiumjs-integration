@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import threeInit, { ThreeParams } from '@/src/utils/threeInit';
 import cesiumInit, { CesiumParams } from '@/src/utils/cesiumInit';
 import styles from './index.module.sass';
 import * as Cesium from 'cesium';
 import * as THREE from 'three';
-import { getThreeModelQuaternion } from '../utils/3d';
+import { flyMeToTheMoon, getThreeModelQuaternion } from '../utils/3d';
 
 type Twins = {
 	three: ThreeParams;
@@ -122,29 +122,50 @@ const Home = () => {
 	useEffect(() => {
 		if (!twins) return;
 
-		const box = new THREE.Mesh(
-			new THREE.BoxGeometry(6, 6, 6),
+		// add cube
+		const cubeGeo = new THREE.BoxGeometry(6, 6, 6);
+		cubeGeo.translate(0, 3, 0);
+		const cube = new THREE.Mesh(
+			cubeGeo,
 			new THREE.MeshPhongMaterial({ color: 0xff0000 }),
 		);
+		cube.name = 'cube';
 		//@ts-ignore
-		box.position.copy(Cesium.Cartesian3.fromDegrees(120, 30));
-		box.setRotationFromQuaternion(
+		cube.position.copy(Cesium.Cartesian3.fromDegrees(120, 30));
+		cube.setRotationFromQuaternion(
 			new THREE.Quaternion(...getThreeModelQuaternion(120, 30))
 		);
-		const sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(3, 32, 32),
-			new THREE.MeshPhongMaterial({ color: 0xff0000 }),
-		);
-		//@ts-ignore
-		sphere.position.copy(Cesium.Cartesian3.fromDegrees(120.00008, 30));
-		sphere.setRotationFromQuaternion(
-			new THREE.Quaternion(...getThreeModelQuaternion(120, 30))
-		);
+		twins.three.scene.add(cube);
 
-		twins.three.scene.add(box, sphere);
+		// add sphere
+		const sphereGeo = new THREE.SphereGeometry(100, 32, 32);
+		sphereGeo.translate(0, 100, 0);
+		const sphere = new THREE.Mesh(
+			sphereGeo,
+			new THREE.MeshPhongMaterial({ color: 0xff0000 }),
+		);
+		sphere.name = 'sphere';
+		//@ts-ignore
+		sphere.position.copy(Cesium.Cartesian3.fromDegrees(120.002, 30));
+		sphere.setRotationFromQuaternion(
+			new THREE.Quaternion(...getThreeModelQuaternion(120.002, 30))
+		);
+		twins.three.scene.add(sphere);
+
 		twins.cesium.viewer.camera.setView({
 			destination: Cesium.Cartesian3.fromDegrees(120, 30, 100),
 		});
+
+		return () => {
+			twins.three.scene.remove(cube, sphere);
+		}
+	}, [twins]);
+
+	const flyTo = useCallback((objectName: string) => {
+		if (!twins) return;
+		const target = twins.three.scene.children.find(({ name }) => name === objectName);
+		if (!target) return;
+		flyMeToTheMoon(twins.cesium.viewer, target);
 	}, [twins]);
 
 
@@ -158,6 +179,14 @@ const Home = () => {
 				ref={threeRef}
 				className={styles.three}
 			/>
+			<div className={styles.btns}>
+				<div onClick={() => flyTo('cube')}>
+					Fly to cube
+				</div>
+				<div onClick={() => flyTo('sphere')}>
+					Fly to sphere
+				</div>
+			</div>
 		</div>
 	</>)
 }
