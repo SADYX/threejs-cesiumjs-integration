@@ -1,4 +1,4 @@
-English | [简体中文](./README-zh_CN.md)
+English | ./README.md
 
 ---
 
@@ -8,11 +8,11 @@ English | [简体中文](./README-zh_CN.md)
 
 A example of integrating Threejs and Ceium includes
 
--   raycaster detect（THREE.Object3D / CESIUM.Entity）
+- raycaster detect（THREE.Object3D / CESIUM.Entity）
 
--   fly to
+- fly to
 
--   conversion of ground close coordinates
+- conversion of ground close coordinates
 
 # quick start
 

@@ -1,4 +1,4 @@
-[English](./README.md) | 简体中文
+[English](./README-en.md) | 简体中文
 
 ---
 
@@ -8,11 +8,11 @@
 
 一个集成了 Threejs 和 Ceium 的示例，包括了
 
--   射线检测（THREE.Object3D / CESIUM.Entity）
+- 射线检测（THREE.Object3D / CESIUM.Entity）
 
--   飞行至模型
+- 飞行至模型
 
--   贴地坐标转化
+- 贴地坐标转化
 
 # 快速启动
 
