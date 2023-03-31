@@ -105,6 +105,39 @@ const Home = () => {
 			}
 		}
 
+		const clickHandler = new Cesium.ScreenSpaceEventHandler(cesium.viewer.scene.canvas);
+		clickHandler.setInputAction((movement: Cesium.ScreenSpaceEventHandler.PositionedEvent) => {
+			const pickedObject = cesium.viewer.scene.pick(movement.position);
+			if (Cesium.defined(pickedObject)) {
+				const position = pickedObject.primitive.position as Cesium.Cartesian3;
+				const lngLat = Cesium.Cartographic.fromCartesian(position);
+				// add cube -> fly to cube -> remove billboard
+				const cubeGeo = new THREE.BoxGeometry(6, 6, 6);
+				cubeGeo.translate(0, 3, 0);
+				const cube = new THREE.Mesh(
+					cubeGeo,
+					new THREE.MeshPhongMaterial({ color: 0xffff00 }),
+				);
+				cube.name = `crash!${Math.random().toFixed(4)}`;
+				//@ts-ignore
+				cube.position.copy(position);
+				cube.setRotationFromQuaternion(
+					new THREE.Quaternion(...getThreeModelQuaternion(
+						lngLat.longitude / Math.PI * 180,
+						lngLat.latitude / Math.PI * 180,
+					))
+				);
+				three.scene.add(cube);
+				flyMeToTheMoon(
+					cesium.viewer,
+					cube,
+					() => {
+						cesium.viewer.entities.remove(pickedObject.id);
+					}
+				);
+			}
+		}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
 		setTwins({ three, cesium });
 		resize();
 		animate();
@@ -114,11 +147,12 @@ const Home = () => {
 		return () => {
 			window.removeEventListener('resize', resize);
 			cesiumDom.removeEventListener('mousemove', onMouseMove);
+			clickHandler.destroy();
 			cancelAnimationFrame(idAnimateFrame);
 		}
 	}, []);
 
-	// add meshes
+	// add meshes/entities
 	useEffect(() => {
 		if (!twins) return;
 
@@ -156,16 +190,33 @@ const Home = () => {
 			destination: Cesium.Cartesian3.fromDegrees(120, 30, 100),
 		});
 
+		// add billboards
+		for (let i = 0; i < 5; i++) {
+			const randomLng = Math.random() * 5 + 120;
+			const randomLat = Math.random() * 2 + 30;
+
+			const entity = new Cesium.Entity({
+				position: Cesium.Cartesian3.fromDegrees(randomLng, randomLat),
+				billboard: {
+					image: 'images/flower.png',
+					width: 30,
+					height: 30,
+				}
+			});
+			twins.cesium.viewer.entities.add(entity);
+		}
+
 		return () => {
 			twins.three.scene.remove(cube, sphere);
+			twins.cesium.viewer.entities.removeAll();
 		}
 	}, [twins]);
 
-	const flyTo = useCallback((objectName: string) => {
+	const flyTo = useCallback((objectName: string, callback?: () => void) => {
 		if (!twins) return;
 		const target = twins.three.scene.children.find(({ name }) => name === objectName);
 		if (!target) return;
-		flyMeToTheMoon(twins.cesium.viewer, target);
+		flyMeToTheMoon(twins.cesium.viewer, target, callback);
 	}, [twins]);
 
 

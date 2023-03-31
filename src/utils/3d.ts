@@ -50,7 +50,7 @@ const getThreeModelQuaternion = (
 }
 
 // look the target object
-const flyMeToTheMoon = (viewer: Cesium.Viewer, obj: THREE.Object3D) => {
+const flyMeToTheMoon = (viewer: Cesium.Viewer, obj: THREE.Object3D, callback?: () => void) => {
     const v = new THREE.Vector3();
     obj.getWorldPosition(v);
     const sphere = new THREE.Box3().expandByObject(obj).getBoundingSphere(new THREE.Sphere());
@@ -61,8 +61,9 @@ const flyMeToTheMoon = (viewer: Cesium.Viewer, obj: THREE.Object3D) => {
                 Cesium.Math.toRadians(60),
                 Cesium.Math.toRadians(-60),
                 0
-            )
-        }
+            ),
+            complete: callback,
+        },
     );
 }
 

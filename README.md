@@ -6,13 +6,13 @@
 
 # threejs-cesiumjs-integration
 
-一个集成了Threejs和Ceium的示例，包括了
+一个集成了 Threejs 和 Ceium 的示例，包括了
 
-- 射线检测
+-   射线检测（THREE.Object3D / CESIUM.Entity）
 
-- 飞行至模型
+-   飞行至模型
 
-- 贴地坐标转化
+-   贴地坐标转化
 
 # 快速启动
 
