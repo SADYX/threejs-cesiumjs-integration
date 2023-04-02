@@ -219,6 +219,13 @@ const Home = () => {
 		flyMeToTheMoon(twins.cesium.viewer, target, callback);
 	}, [twins]);
 
+	const scanFlowers = useCallback(() => {
+		if (!twins?.cesium) return;
+		twins.cesium.viewer.camera.setView({
+			destination: Cesium.Cartesian3.fromDegrees(122.5, 31, 1000000),
+		});
+	}, [twins?.cesium]);
+
 
 	return (<>
 		<div className={styles.container}>
@@ -236,6 +243,9 @@ const Home = () => {
 				</div>
 				<div onClick={() => flyTo('sphere')}>
 					Fly to sphere
+				</div>
+				<div onClick={scanFlowers}>
+					Scan flowers
 				</div>
 			</div>
 		</div>
